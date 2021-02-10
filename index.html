@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,height=device-height,maximum-scale=0.66,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<title>野比三石の留言板</title>
+<link href="https://cdn.ssss.fun/message-board/css/style.css" type="text/css" rel="stylesheet" />
+<script src="https://cdn.ssss.fun/message-board/js/jquery.min.js"></script>
+<script src="https://cdn.ssss.fun/message-board/js/alert.js"></script>
+<script type="text/javascript">
+function spush() {
+	alert("⌛ 正在发送……");
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "https://api.ssss.fun/push/ybss.php",
+		data: $('#sform').serialize(),
+		success: function (result) {
+				console.log(result); //打印服务端返回的数据（调试用）
+				if (result.resultCode == 1) {
+					alert("🙂 发送成功！");
+				};
+			},
+			error: function () {
+				alert("😟 发送失败！");
+			}
+	});
+}
+</script>
+</head>
+<body>
+<div id="wrap">
+    <h1>野比三石の留言板</h1>
+	<div id='form_wrap'>
+		<form id="sform" onsubmit="return false" action="##" method="post">
+			<p>你好三石</p>
+			<input type="hidden" name="subject" value="野比三石の留言板" />
+			<label for="email">▾ 留言内容：</label>
+			<input type="hidden" name="a1" value="留言内容：" />
+			<textarea  name="b1" placeholder="请输入您要留言的内容" value="" id="message" ></textarea>
+			<label for="name">▾ 您的名字：</label>
+			<input type="hidden" name="a2" value="姓名：" />
+			<input type="text" name="b2" placeholder="请输入您的名字" value="" id="name" />
+			<label for="email">▾ 联系方式：</label>
+			<input type="hidden" name="a3" value="联系方式：" />
+			<input type="text" name="b3" placeholder="请输入联系方式" value="" id="contact" />
+			<input type="submit" value="我写好了" onclick="spush()">
+		</form>
+	</div>
+</div>
+</body>
+</html>
